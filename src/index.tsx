@@ -33,7 +33,10 @@ export default function Command() {
 
 /** Parse the response from the fetch query into something we can display */
 async function parseFetchResponse(response: Response) {
-  const json = (await response.json()) as TranslateResponse
-
-  return json.hits;
+  try {
+    const data = (await response.json()) as TranslateResponse
+    return data.hits;
+  } catch(err) {
+    return [];
+  }
 }
