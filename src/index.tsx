@@ -23,7 +23,9 @@ export default function Command() {
       throttle
     >
       <List.Section title="Results" subtitle={data?.length + ""}>
-        {data?.map((word) => <WordListItem key={word.id} word={word} />)}
+        {data?.map((word) => (
+          <WordListItem key={word.id} word={word} />
+        ))}
       </List.Section>
     </List>
   );
@@ -33,7 +35,7 @@ export default function Command() {
 async function parseFetchResponse(response: Response) {
   try {
     const data = (await response.json()) as TranslateResponse;
-    return data.found.map((item) => ({
+    return data.found.slice(0, 49).map((item) => ({
       id: item.id,
       word: item[data.from],
       translation: item[data.to].replace(/\r|\n|\t/g, ""),
